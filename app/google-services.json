@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "344548220743",
+    "project_id": "chatfriend-67c0c",
+    "storage_bucket": "chatfriend-67c0c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:344548220743:android:3e797edc289fa323c37662",
+        "android_client_info": {
+          "package_name": "com.sudeep.chatfriend"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "344548220743-f5nnsvtlqhj3bj8b48f68pa503dd0u4m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8Ym0GWAKQcxHM7C7i6KmhCjnvjWR7Z6A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "344548220743-f5nnsvtlqhj3bj8b48f68pa503dd0u4m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
