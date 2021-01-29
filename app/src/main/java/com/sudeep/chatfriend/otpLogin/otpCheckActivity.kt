@@ -109,6 +109,11 @@ class otpCheckActivity : AppCompatActivity(){
         auth.signInWithCredential(credential)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
+                        if(task.result?.additionalUserInfo?.isNewUser==true){
+                            Toast.makeText(this,"You are new User ",Toast.LENGTH_SHORT).show()
+                        }else{
+                            Toast.makeText(this,"Old User",Toast.LENGTH_SHORT).show()
+                        }
                         // Sign in success, update UI with the signed-in user's information
 
                         startActivity(Intent(this,MainActivity::class.java))
