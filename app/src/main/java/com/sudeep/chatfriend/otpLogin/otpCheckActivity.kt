@@ -1,10 +1,12 @@
 package com.sudeep.chatfriend.otpLogin
 
+import android.app.PendingIntent
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.drm.ProcessedData
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.os.Message
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -28,19 +30,20 @@ class otpCheckActivity : AppCompatActivity(){
     var storedVerificationId:String=""
     lateinit var resendToken:PhoneAuthProvider.ForceResendingToken
     lateinit var callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks
-
-
     val resendOtp: Button by lazy {
         findViewById(R.id.resendBtn)
     }
-
     val mobileNo :TextView by lazy {
         findViewById(R.id.verifyTv)
     }
     val nextBtn : Button by lazy {
         findViewById(R.id.verificationBtn)
     }
+    val counterTv:TextView by lazy {
+        findViewById(R.id.counterTv)
+    }
 
+    lateinit var counter:CountDownTimer
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_otp_check)
@@ -48,11 +51,37 @@ class otpCheckActivity : AppCompatActivity(){
         var mob=intent.getStringExtra("PHONENO")
         mobileNo.text= "$mob"
 
+
            intit()
+        startVerify()
 
 
 
     }
+    private fun startVerify() {
+        var mob=intent.getStringExtra("PHONENO")
+        startPhoneNumberVerfication(mob)
+        starttime(60000)
+
+    }
+
+    fun starttime(time:Long){
+        resendOtp.isEnabled=false
+        counterTv.isEnabled=true
+        counter=object:CountDownTimer(time,1000){
+            override fun onTick(timeLeft: Long) {
+              counterTv.text= "Seconds Remaining : " + timeLeft / 1000
+            }
+
+            override fun onFinish() {
+                resendOtp.isEnabled=true
+
+            }
+
+        }
+
+    }
+
 
 
     fun intit() {
@@ -62,8 +91,13 @@ class otpCheckActivity : AppCompatActivity(){
         process.show()
         process.setCancelable(false)
         nextBtn.setOnClickListener {
-            val credential = PhoneAuthProvider.getCredential(storedVerificationId!!, firstPinView.text.toString())
-            signInWithAuth(credential)
+            if(firstPinView.text.toString().isEmpty()){
+                Toast.makeText(this,"Please Enter Otp",Toast.LENGTH_SHORT).show()
+            }else {
+
+                val credential = PhoneAuthProvider.getCredential(storedVerificationId!!, firstPinView.text.toString())
+                signInWithAuth(credential)
+            }
         }
         var mob = intent.getStringExtra("PHONENO")
         auth = FirebaseAuth.getInstance()
@@ -90,8 +124,9 @@ class otpCheckActivity : AppCompatActivity(){
                 process.dismiss()
                 if (p0 is FirebaseAuthInvalidCredentialsException) {
                     Snackbar.make(findViewById(android.R.id.content), "Invalid phone number", Snackbar.LENGTH_SHORT).show()
+                    finish()
                 } else if (p0 is FirebaseTooManyRequestsException) {
-                    Snackbar.make(findViewById(android.R.id.content), "You have try to many", Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(findViewById(android.R.id.content), "You have try too many times", Snackbar.LENGTH_SHORT).show()
                 }
             }
         }
