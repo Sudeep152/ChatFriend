@@ -1,11 +1,12 @@
 package com.sudeep.chatfriend.otpLogin
 
+import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
+import android.drm.ProcessedData
 import android.os.Bundle
-import android.widget.Button
-import android.widget.SeekBar
-import android.widget.TextView
-import android.widget.Toast
+import android.os.Message
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseException
@@ -24,18 +25,22 @@ import java.util.concurrent.TimeUnit
 class otpCheckActivity : AppCompatActivity(){
 
     lateinit var  auth:FirebaseAuth
-
-   var verificationInProcess=false
     var storedVerificationId:String=""
     lateinit var resendToken:PhoneAuthProvider.ForceResendingToken
     lateinit var callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks
 
+
+    val resendOtp: Button by lazy {
+        findViewById(R.id.resendBtn)
+    }
+
     val mobileNo :TextView by lazy {
-        findViewById(R.id.mobileN)
+        findViewById(R.id.verifyTv)
     }
     val nextBtn : Button by lazy {
-        findViewById(R.id.nextBtn)
+        findViewById(R.id.verificationBtn)
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_otp_check)
@@ -43,56 +48,57 @@ class otpCheckActivity : AppCompatActivity(){
         var mob=intent.getStringExtra("PHONENO")
         mobileNo.text= "$mob"
 
+           intit()
 
-      intit()
 
 
     }
-    fun intit(){
 
+
+    fun intit() {
+
+        var process=ProgressDialog(this)
+        process.setMessage("Loading...")
+        process.show()
+        process.setCancelable(false)
         nextBtn.setOnClickListener {
             val credential = PhoneAuthProvider.getCredential(storedVerificationId!!, firstPinView.text.toString())
             signInWithAuth(credential)
         }
-
-        var mob=intent.getStringExtra("PHONENO")
+        var mob = intent.getStringExtra("PHONENO")
         auth = FirebaseAuth.getInstance()
-
-        callbacks=object :PhoneAuthProvider.OnVerificationStateChangedCallbacks(){
+        callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             override fun onCodeSent(p0: String, p1: PhoneAuthProvider.ForceResendingToken) {
                 super.onCodeSent(p0, p1)
-                storedVerificationId=p0
+                process.dismiss()
+                storedVerificationId = p0
             }
 
             override fun onCodeAutoRetrievalTimeOut(p0: String) {
                 super.onCodeAutoRetrievalTimeOut(p0)
             }
 
-            override fun onVerificationCompleted(credential:  PhoneAuthCredential) {
-                val smsCode=credential.smsCode
+            override fun onVerificationCompleted(credential: PhoneAuthCredential) {
+                val smsCode = credential.smsCode
+                process.dismiss()
                 firstPinView.setText(smsCode)
                 signInWithAuth(credential)
 
             }
 
             override fun onVerificationFailed(p0: FirebaseException) {
-               if (p0 is FirebaseAuthInvalidCredentialsException){
-                   Snackbar.make(findViewById(android.R.id.content),"Invalid phone number",Snackbar.LENGTH_SHORT).show()
-               }else if(p0 is FirebaseTooManyRequestsException ){
-                   Snackbar.make(findViewById(android.R.id.content),"You have try to many",Snackbar.LENGTH_SHORT).show()
-               }
+                process.dismiss()
+                if (p0 is FirebaseAuthInvalidCredentialsException) {
+                    Snackbar.make(findViewById(android.R.id.content), "Invalid phone number", Snackbar.LENGTH_SHORT).show()
+                } else if (p0 is FirebaseTooManyRequestsException) {
+                    Snackbar.make(findViewById(android.R.id.content), "You have try to many", Snackbar.LENGTH_SHORT).show()
+                }
             }
-
-
         }
-
-
         startPhoneNumberVerfication(mob)
-
     }
 
     private fun startPhoneNumberVerfication(mob: String?) {
-
         val options = PhoneAuthOptions.newBuilder(auth)
                 .setPhoneNumber(mob.toString())       // Phone number to verify
                 .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
@@ -105,7 +111,6 @@ class otpCheckActivity : AppCompatActivity(){
 
 
     private fun signInWithAuth(credential: PhoneAuthCredential) {
-
         auth.signInWithCredential(credential)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
@@ -114,16 +119,15 @@ class otpCheckActivity : AppCompatActivity(){
                         }else{
                             Toast.makeText(this,"Old User",Toast.LENGTH_SHORT).show()
                         }
-                        // Sign in success, update UI with the signed-in user's information
-
                         startActivity(Intent(this,MainActivity::class.java))
                         finish()
                     } else {
-                        Toast.makeText(this,"Something went wrong",Toast.LENGTH_SHORT).show()
-
+                        Toast.makeText(this,"Please enter valid otp",Toast.LENGTH_SHORT).show()
                     }
                 }
     }
+
+
 
 }
 
