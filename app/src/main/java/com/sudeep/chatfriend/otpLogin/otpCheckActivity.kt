@@ -17,6 +17,7 @@ import com.google.firebase.auth.*
 import com.google.firebase.auth.PhoneAuthProvider.OnVerificationStateChangedCallbacks
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.sudeep.chatfriend.CreatProfile.CreatprofileActivity
 import com.sudeep.chatfriend.MainActivity
 import com.sudeep.chatfriend.R
 import kotlinx.android.synthetic.main.activity_mobile.*
@@ -149,12 +150,15 @@ class otpCheckActivity : AppCompatActivity(){
         auth.signInWithCredential(credential)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-                        if(task.result?.additionalUserInfo?.isNewUser==true){
-                            Toast.makeText(this,"You are new User ",Toast.LENGTH_SHORT).show()
-                        }else{
-                            Toast.makeText(this,"Old User",Toast.LENGTH_SHORT).show()
+                        if(task.result?.additionalUserInfo?.isNewUser==true) {
+                            Toast.makeText(this, "You are new User ", Toast.LENGTH_SHORT).show()
+                            startActivity(Intent(this,CreatprofileActivity::class.java))
+                            finish()
                         }
-                        startActivity(Intent(this,MainActivity::class.java))
+//                        }else{
+//                            Toast.makeText(this,"Old User",Toast.LENGTH_SHORT).show()
+//                        }
+                        startActivity(Intent(this,CreatprofileActivity::class.java))
                         finish()
                     } else {
                         Toast.makeText(this,"Please enter valid otp",Toast.LENGTH_SHORT).show()
