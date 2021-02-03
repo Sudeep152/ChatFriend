@@ -4,5 +4,9 @@
          Be yourself in every message.</string>
     <string name="enter_the_code_we_sent_to">Enter the code we sent to</string>
     <string name="set_up_your_profile">Set up your profile</string>
+    <string name="enter_your_name">Enter your name</string>
+    <string name="enter_bio_here">Enter Bio here</string>
+    <string name="next">Next</string>
+    <string name="your_profile_and_chnages_to_it_will_be_visible_to_your_friends_when_you_inititate_or_accept_new_conversations">Your profile and chnages to it will be visible to your friends ,when you inititate or accept new conversations.</string>
 
 </resources>

@@ -3,15 +3,21 @@
     package="com.sudeep.chatfriend">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ChatFriend">
-        <activity android:name=".CreatProfile.CreatprofileActivity"></activity>
+        <activity android:name=".CreatProfile.OldProfileActivity"></activity>
+        <activity
+            android:name=".CreatProfile.CreatprofileActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".otpLogin.otpCheckActivity"
             android:screenOrientation="portrait" />

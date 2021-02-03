@@ -1,24 +1,16 @@
 package com.sudeep.chatfriend.otpLogin
 
-import android.app.PendingIntent
 import android.app.ProgressDialog
-import android.content.Context
 import android.content.Intent
-import android.drm.ProcessedData
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.os.Message
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
-import com.google.firebase.auth.PhoneAuthProvider.OnVerificationStateChangedCallbacks
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import com.sudeep.chatfriend.CreatProfile.CreatprofileActivity
-import com.sudeep.chatfriend.MainActivity
 import com.sudeep.chatfriend.R
 import kotlinx.android.synthetic.main.activity_mobile.*
 import kotlinx.android.synthetic.main.activity_otp_check.*
@@ -38,7 +30,7 @@ class otpCheckActivity : AppCompatActivity(){
         findViewById(R.id.verifyTv)
     }
     val nextBtn : Button by lazy {
-        findViewById(R.id.verificationBtn)
+        findViewById(R.id.Nbtn)
     }
     val counterTv:TextView by lazy {
         findViewById(R.id.counterTv)

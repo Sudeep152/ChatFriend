@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="set_up_your_profile">Set up your profile</string>
+    <string name="your_profile_and_chnages_to_it_will_be_visible_to_your_friends_when_you_inititate_or_accept_new_conversations">Your profile and chnages to it will be visible to your friends ,when you inititate or accept new conversations.</string>
 </resources>
