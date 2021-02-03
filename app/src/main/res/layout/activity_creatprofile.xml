@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profile_image"
+        android:id="@+id/old_profile_image"
         android:layout_width="148dp"
         android:layout_height="151dp"
         android:layout_marginTop="50dp"
@@ -61,13 +61,13 @@
         android:gravity="top"
         android:hint="Enter Bio here"
         android:inputType="text|textMultiLine"
-        app:layout_constraintBottom_toTopOf="@+id/Nbtn"
+        app:layout_constraintBottom_toTopOf="@+id/old_NBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameET" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/Nbtn"
+        android:id="@+id/old_NBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -89,9 +89,9 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:backgroundTint="@color/colorPrimary"
-        app:layout_constraintBottom_toBottomOf="@+id/profile_image"
+        app:layout_constraintBottom_toBottomOf="@+id/old_profile_image"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/profile_image"
+        app:layout_constraintStart_toStartOf="@+id/old_profile_image"
         app:srcCompat="@drawable/add"
         android:contentDescription="TODO"
         tools:ignore="VectorDrawableCompat" />
@@ -108,5 +108,5 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Nbtn" />
+        app:layout_constraintTop_toBottomOf="@+id/old_NBtn" />
 </androidx.constraintlayout.widget.ConstraintLayout>

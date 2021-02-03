@@ -11,6 +11,7 @@ import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
 import com.sudeep.chatfriend.CreatProfile.CreatprofileActivity
+import com.sudeep.chatfriend.CreatProfile.OldProfileActivity
 import com.sudeep.chatfriend.R
 import kotlinx.android.synthetic.main.activity_mobile.*
 import kotlinx.android.synthetic.main.activity_otp_check.*
@@ -30,7 +31,7 @@ class otpCheckActivity : AppCompatActivity(){
         findViewById(R.id.verifyTv)
     }
     val nextBtn : Button by lazy {
-        findViewById(R.id.Nbtn)
+        findViewById(R.id.old_NBtn)
     }
     val counterTv:TextView by lazy {
         findViewById(R.id.counterTv)
@@ -146,12 +147,12 @@ class otpCheckActivity : AppCompatActivity(){
                             Toast.makeText(this, "You are new User ", Toast.LENGTH_SHORT).show()
                             startActivity(Intent(this,CreatprofileActivity::class.java))
                             finish()
+                        }else{
+                            Toast.makeText(this,"Old User",Toast.LENGTH_SHORT).show()
+                            startActivity(Intent(this,OldProfileActivity::class.java))
+                            finish()
                         }
-//                        }else{
-//                            Toast.makeText(this,"Old User",Toast.LENGTH_SHORT).show()
-//                        }
-                        startActivity(Intent(this,CreatprofileActivity::class.java))
-                        finish()
+//
                     } else {
                         Toast.makeText(this,"Please enter valid otp",Toast.LENGTH_SHORT).show()
                     }

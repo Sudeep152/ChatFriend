@@ -29,6 +29,7 @@ class MobileActivity : AppCompatActivity() {
                 val intent= Intent(this, otpCheckActivity::class.java)
                 intent.putExtra("PHONENO",mobileNumebr)
                 startActivity(intent)
+                finish()
             }
 
 

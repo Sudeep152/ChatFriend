@@ -14,9 +14,9 @@ import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.FirebaseFirestoreKtxRegistrar
 import com.google.firebase.storage.FirebaseStorage
 import com.sudeep.chatfriend.DataModels.CreateUser
+import com.sudeep.chatfriend.MainActivity
 import com.sudeep.chatfriend.R
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_creatprofile.*
@@ -31,11 +31,11 @@ class CreatprofileActivity : AppCompatActivity() {
         findViewById(R.id.bioET)
     }
     val nextBtn: Button by lazy {
-        findViewById(R.id.Nbtn)
+        findViewById(R.id.old_NBtn)
 
     }
     val profileImage:CircleImageView by lazy {
-        findViewById(R.id.profile_image)
+        findViewById(R.id.old_profile_image)
     }
     val addPF:FloatingActionButton by lazy {
         findViewById(R.id.addImg)
@@ -60,6 +60,7 @@ class CreatprofileActivity : AppCompatActivity() {
         }
 
 
+
         nextBtn.setOnClickListener {
            if(TextUtils.isEmpty(name.text.toString()) || TextUtils.isEmpty(bio.text.toString())){
                Toast.makeText(this,"Please fill all fields and Make Sure Upload profile Image",Toast.LENGTH_SHORT).show()
@@ -68,6 +69,9 @@ class CreatprofileActivity : AppCompatActivity() {
 
            else{
                createData()
+               val intent=Intent(this,MainActivity::class.java)
+               startActivity(intent)
+               finish()
            }
 
         }
@@ -146,4 +150,8 @@ class CreatprofileActivity : AppCompatActivity() {
 
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finishAffinity()
+    }
 }
