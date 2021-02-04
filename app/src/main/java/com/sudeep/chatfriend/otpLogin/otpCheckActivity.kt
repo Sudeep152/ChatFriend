@@ -2,10 +2,12 @@ package com.sudeep.chatfriend.otpLogin
 
 import android.app.ProgressDialog
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide.init
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
@@ -41,6 +43,9 @@ class otpCheckActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_otp_check)
+
+
+
 
         var mob=intent.getStringExtra("PHONENO")
         mobileNo.text= "$mob"
@@ -143,6 +148,11 @@ class otpCheckActivity : AppCompatActivity(){
         auth.signInWithCredential(credential)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
+                        var sharedPreferences :SharedPreferences =getSharedPreferences("code", MODE_PRIVATE)
+                        var editor:SharedPreferences.Editor=sharedPreferences.edit()
+
+                        editor.putString("FLAG","TRUE")
+                        editor.apply()
                         if(task.result?.additionalUserInfo?.isNewUser==true) {
                             Toast.makeText(this, "You are new User ", Toast.LENGTH_SHORT).show()
                             startActivity(Intent(this,CreatprofileActivity::class.java))

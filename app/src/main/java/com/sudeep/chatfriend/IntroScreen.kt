@@ -1,6 +1,7 @@
 package com.sudeep.chatfriend
 
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.animation.AnimationUtils
@@ -15,8 +16,19 @@ class IntroScreen : AppCompatActivity() {
         val animation =AnimationUtils.loadAnimation(applicationContext,R.anim.btnclick)
         nextBtn.setOnClickListener {
 
-            nextBtn.startAnimation(animation)
-            startActivity(Intent(this, MobileActivity::class.java))
+            var sharedPreferences:SharedPreferences=getSharedPreferences("code", MODE_PRIVATE)
+            var code=sharedPreferences.getString("FLAG","FALSE")
+
+            if(code.equals("TRUE")){
+                nextBtn.startAnimation(animation)
+                startActivity(Intent(this,MainActivity::class.java))
+            }else{
+                nextBtn.startAnimation(animation)
+                startActivity(Intent(this, MobileActivity::class.java))
+
+            }
+
+
 
         }
     }

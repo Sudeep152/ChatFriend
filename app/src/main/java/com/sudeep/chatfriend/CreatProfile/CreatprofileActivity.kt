@@ -114,8 +114,12 @@ class CreatprofileActivity : AppCompatActivity() {
         val currentUserId=FirebaseAuth.getInstance().currentUser?.uid.toString()
 
 
+        var download="NoImage"
 
-      var storageForImage= storageRF.reference.child("ProfileImages").child(
+
+        if(imgaeUri !=null){
+
+            var storageForImage= storageRF.reference.child("ProfileImages").child(
             FirebaseAuth.getInstance().currentUser?.phoneNumber.toString() +"_"+System.currentTimeMillis()+".jpg")
 
         val uploadTask =storageForImage.putFile(imgaeUri!!)
@@ -126,22 +130,22 @@ class CreatprofileActivity : AppCompatActivity() {
             storageForImage.downloadUrl
         }.addOnCompleteListener { task->
             if(task.isSuccessful){
-               val download=task.result.toString()
-                val userDataClass=CreateUser(name,currentUserId,bio,download)
-                firebaseDB.collection("Users").document(FirebaseAuth.getInstance().currentUser?.uid.toString()).set(userDataClass)
-                    .addOnCompleteListener { task->
-                        if(task.isSuccessful){
-                            Toast.makeText(this,"Successfully",Toast.LENGTH_SHORT).show()
-                        }else{
-                            Toast.makeText(this,"sometiong"+task.exception.toString(),Toast.LENGTH_SHORT).show()
-                        }
-                    }
+               download=task.result.toString()
+
             }
 
-        }.addOnFailureListener{
-            val userDataClass=CreateUser(name,currentUserId,bio,"")
-            firebaseDB.collection("Users").document(FirebaseAuth.getInstance().currentUser?.uid.toString()).set(userDataClass)
         }
+
+        }
+        val userDataClass=CreateUser(name,currentUserId,bio,download)
+        firebaseDB.collection("Users").document(FirebaseAuth.getInstance().currentUser?.uid.toString()).set(userDataClass)
+                .addOnCompleteListener { task->
+                    if(task.isSuccessful){
+                        Toast.makeText(this,"Successfully",Toast.LENGTH_SHORT).show()
+                    }else{
+                        Toast.makeText(this,"sometiong"+task.exception.toString(),Toast.LENGTH_SHORT).show()
+                    }
+                }
 
 
 
