@@ -14,6 +14,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.sudeep.chatfriend.DataModels.CreateUser
+import com.sudeep.chatfriend.MainActivity
 import com.sudeep.chatfriend.R
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_old_profile.*
@@ -67,6 +68,11 @@ class OldProfileActivity : AppCompatActivity() {
             val intent=Intent(this,CreatprofileActivity::class.java)
             startActivity(intent)
             finish()
+        }
+
+        nextBtn.setOnClickListener {
+         startActivity(Intent(this,MainActivity::class.java))
+         finish()
         }
 
     }

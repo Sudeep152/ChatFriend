@@ -119,8 +119,7 @@ class CreatprofileActivity : AppCompatActivity() {
 
         if(imgaeUri !=null){
 
-            var storageForImage= storageRF.reference.child("ProfileImages").child(
-            FirebaseAuth.getInstance().currentUser?.phoneNumber.toString() +"_"+System.currentTimeMillis()+".jpg")
+            var storageForImage= storageRF.reference.child("ProfileImages/${FirebaseAuth.getInstance().currentUser?.uid.toString()}")
 
         val uploadTask =storageForImage.putFile(imgaeUri!!)
         val urlTask= uploadTask?.continueWithTask{ task->
@@ -131,6 +130,16 @@ class CreatprofileActivity : AppCompatActivity() {
         }.addOnCompleteListener { task->
             if(task.isSuccessful){
                download=task.result.toString()
+
+                val userDataClass=CreateUser(name,currentUserId,bio,download)
+                firebaseDB.collection("Users").document(FirebaseAuth.getInstance().currentUser?.uid.toString()).set(userDataClass)
+                        .addOnCompleteListener { task->
+                            if(task.isSuccessful){
+                                Toast.makeText(this,"Successfully",Toast.LENGTH_SHORT).show()
+                            }else{
+                                Toast.makeText(this,"sometiong"+task.exception.toString(),Toast.LENGTH_SHORT).show()
+                            }
+                        }
 
             }
 
